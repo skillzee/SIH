@@ -37,7 +37,7 @@ const register = async(req,res) =>{
             bloodGroup
         })
 
-        return res.status(201).json({
+        return res.status(200).json({
             data: donor,
             message: "Donor Registerd Successfully"
         })
