@@ -11,10 +11,10 @@ const customStyles = {
     ...provided,
     backgroundColor: 'white',
     color: 'black',
-    borderColor: '#CBD5E0', // Chakra's gray.300
+    borderColor: '#CBD5E0',
     boxShadow: 'none',
     '&:hover': {
-      borderColor: '#A0AEC0', // Chakra's gray.400
+      borderColor: '#A0AEC0',
     },
   }),
   menu: (provided) => ({
@@ -23,10 +23,10 @@ const customStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected ? '#2C7A7B' : state.isFocused ? '#E6FFFA' : 'white', // Chakra's teal.600 and teal.50
+    backgroundColor: state.isSelected ? '#2C7A7B' : state.isFocused ? '#E6FFFA' : 'white',
     color: state.isSelected ? 'white' : 'black',
     '&:hover': {
-      backgroundColor: '#B2F5EA', // Chakra's teal.100
+      backgroundColor: '#B2F5EA',
     },
   }),
   singleValue: (provided) => ({
@@ -46,17 +46,19 @@ const DonorSignup = () => {
   const [selectedCity, setSelectedCity] = useState(null);
 
   const onSubmit = async (data) => {
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       // Add country, state, and city to form data
       const formData = {
         ...data,
-        country: selectedCountry?.name || '',
-        state: selectedState?.name || '',
-        city: selectedCity?.name || '',
+        country: selectedCountry?.value || '',
+        state: selectedState?.value || '',
+        city: selectedCity?.value || '',
       };
 
-      const response = await axios.post('http://localhost:5000/api/donor/register', formData);
+      console.log('Submitting form data:', formData); // Debugging statement
+
+      const response = await axios.post('https://sih-only-backend.onrender.com/api/donor/register', formData);
 
       if (response.status === 200) {
         toast({
@@ -67,7 +69,7 @@ const DonorSignup = () => {
           isClosable: true,
         });
 
-        reset(); // Reset form after successful submission
+        reset();
         navigate('/');
       }
     } catch (error) {
@@ -79,7 +81,7 @@ const DonorSignup = () => {
         isClosable: true,
       });
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
@@ -206,7 +208,7 @@ const DonorSignup = () => {
             colorScheme="teal"
             size="lg"
             w="full"
-            isLoading={loading} // Display loading spinner
+            isLoading={loading}
           >
             Sign Up
           </Button>
